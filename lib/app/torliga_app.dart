@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../config/router/app_router.dart';
 import '../core/constants/app_constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TorligaApp extends StatelessWidget {
   const TorligaApp({super.key});
@@ -12,8 +13,9 @@ class TorligaApp extends StatelessWidget {
       routerConfig: AppRouter.router,
       title: AppConstants.appName,
       theme: ThemeData(
-        useMaterial3: true,
-      ),
+          textTheme: GoogleFonts.chakraPetchTextTheme(
+        Theme.of(context).textTheme,
+      )),
     );
   }
 }
