@@ -12,10 +12,7 @@ class TorligaApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: AppRouter.router,
       title: AppConstants.appName,
-      theme: ThemeData(
-          textTheme: GoogleFonts.chakraPetchTextTheme(
-        Theme.of(context).textTheme,
-      )),
+      theme: ThemeData(textTheme: GoogleFonts.chakraPetchTextTheme()),
     );
   }
 }
