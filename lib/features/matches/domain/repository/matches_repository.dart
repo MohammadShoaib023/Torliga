@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import '../../../../core/failure/failure.dart';
-import '../entities/datum_entity.dart';
+import '../entities/matches_entity.dart';
 
 abstract class MatchesRepository {
-  Future<Either<Failure, List<DatumEntity>>> fetchPastMatches();
-  Future<Either<Failure, List<DatumEntity>>> fetchTodayMatches();
-  Future<Either<Failure, List<DatumEntity>>> fetchUpcomingMatches();
+  Future<Either<Failure, MatchesEntity>> fetchPastMatches();
+  Future<Either<Failure, MatchesEntity>> fetchTodayMatches();
+  Future<Either<Failure, MatchesEntity>> fetchUpcomingMatches();
 }

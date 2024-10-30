@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:torliga/features/matches/domain/entities/datum_entity.dart';
 
-class TodaysMatchEntity extends Equatable {
+class MatchesEntity extends Equatable {
   final List<DatumEntity> datum;
 
-  const TodaysMatchEntity(this.datum);
+  const MatchesEntity(this.datum);
 
   @override
   List<Object?> get props => [datum];
