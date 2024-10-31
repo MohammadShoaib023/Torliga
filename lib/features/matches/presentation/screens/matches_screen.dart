@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../fake_data.dart';
 import '../widgets/country_matches_widgets.dart';
-import '../widgets/custom_match_widget.dart';
 
 class MatchesScreen extends StatefulWidget {
   const MatchesScreen({super.key});
@@ -22,22 +22,22 @@ class _MatchesScreenState extends State<MatchesScreen> {
       teamName1: "Valencia",
       teamName2: "Barcelona",
       matchTime: "23:30",
-      teamLogo1: "assets/one.svg",
-      teamLogo2: "assets/two.svg",
+      teamLogo1: AppAssets.one,
+      teamLogo2: AppAssets.two,
     ),
     MatchData(
       teamName1: "Valencia",
       teamName2: "Barcelona",
       matchTime: "23:30",
-      teamLogo1: "assets/one.svg",
-      teamLogo2: "assets/two.svg",
+      teamLogo1: AppAssets.one,
+      teamLogo2: AppAssets.two,
     ),
     MatchData(
       teamName1: "Real Madrid",
       teamName2: "Sevilla",
       matchTime: "20:15",
-      teamLogo1: "assets/one.svg",
-      teamLogo2: "assets/two.svg",
+      teamLogo1: AppAssets.one,
+      teamLogo2: AppAssets.two,
     ),
     // Add more matches as needed
   ];
@@ -107,7 +107,7 @@ class _MatchesScreenState extends State<MatchesScreen> {
                   child: CountryMatchesWidget(
                     countryName: "Spain",
                     leagueName: "LaLiga",
-                    flagAsset: "assets/spain.svg",
+                    flagAsset: AppAssets.spain,
                     matches: matchList,
                   ),
                 );
