@@ -4,17 +4,17 @@ sealed class MatchesEvents extends Equatable {
   const MatchesEvents();
 }
 
-class FetchTodayMatches extends MatchesEvents {
+class FetchTodayMatchesEvent extends MatchesEvents {
   @override
   List<Object?> get props => [];
 }
 
-class FetchPastMatches extends MatchesEvents {
+class FetchPastMatchesEvent extends MatchesEvents {
   @override
   List<Object?> get props => [];
 }
 
-class FetchUpcomingMatches extends MatchesEvents {
+class FetchUpcomingMatchesEvent extends MatchesEvents {
   @override
   List<Object?> get props => [];
 }
