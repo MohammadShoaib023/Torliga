@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../constants/app_end_points.dart';
 import '../failure/failure.dart';
 import '../utils/logger.dart';
 import 'package:dartz/dartz.dart';
@@ -26,7 +27,7 @@ class ApiService {
 
   Dio _createDio() => Dio(
         BaseOptions(
-          baseUrl: "",
+          baseUrl: ApiEndPoints.baseUrl,
           connectTimeout: const Duration(seconds: 60),
           receiveTimeout: const Duration(seconds: 60),
           followRedirects: true,
