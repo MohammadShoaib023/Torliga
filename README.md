@@ -39,3 +39,14 @@ The project is built with clean architecture principles, employing BLoC for stat
     │   ├── screen/                       # UI screens/pages for user interaction
     │   └── widgets/                      # Reusable UI components/widgets for the feature
     └── main.dart                         # App's main entry point that bootstraps the app
+
+## App Screenshots
+
+![Screen 1](screenshot/splash.jpeg)
+_Splash Screen as like as Original Torliga_
+
+![Screen 2](screenshot/loading.jpeg)
+_Loading Effect Screen as Like as Original Torliga_
+
+![Screen 3](screenshot/upcoming.jpeg)
+_Upcoming Matches Screen_
