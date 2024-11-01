@@ -62,6 +62,7 @@ class PastMatches extends StatelessWidget {
         return Padding(
             padding: EdgeInsets.only(top: 8.0),
             child: CountryMatchesWidget(
+              isExpandedActive: index == 0 ? false : true,
               countryName: state.pastMatches!.datum[index].competition!.name,
               flagAsset: state.pastMatches!.datum[index].competition!.logo,
               matches: state.pastMatches!.datum[index].matches!,

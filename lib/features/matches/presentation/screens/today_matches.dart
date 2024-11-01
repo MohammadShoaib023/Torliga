@@ -62,8 +62,8 @@ class TodayMatches extends StatelessWidget {
         return Padding(
             padding: EdgeInsets.only(top: 8.0),
             child: CountryMatchesWidget(
+              isExpandedActive: index == 0 ? false : true,
               countryName: state.todaysMatches!.datum[index].competition!.name,
-         
               flagAsset: state.todaysMatches!.datum[index].competition!.logo,
               matches: state.todaysMatches!.datum[index].matches!,
             ));

@@ -62,6 +62,7 @@ class UpcomingMatches extends StatelessWidget {
         return Padding(
             padding: EdgeInsets.only(top: 8.0),
             child: CountryMatchesWidget(
+              isExpandedActive: index == 0 ? false : true,
               countryName:
                   state.upcomingMatches!.datum[index].competition!.name,
               flagAsset: state.upcomingMatches!.datum[index].competition!.logo,
