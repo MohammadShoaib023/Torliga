@@ -6,7 +6,7 @@ import '../entities/datum_entity.dart';
 import '../entities/matches_entity.dart';
 import '../repository/matches_repository.dart';
 
-class FetchUpcomingMatchesUseCase extends UseCase<List<DatumEntity>, NoParams> {
+class FetchUpcomingMatchesUseCase extends UseCase<MatchesEntity, NoParams> {
   final MatchesRepository matchesRepository;
   FetchUpcomingMatchesUseCase(this.matchesRepository);
 
