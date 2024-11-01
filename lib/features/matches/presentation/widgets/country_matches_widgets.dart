@@ -1,20 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import '../../../fake_data.dart';
+import '../../domain/entities/match_entity.dart';
 import 'custom_match_widget.dart';
 
 class CountryMatchesWidget extends StatelessWidget {
   final String countryName;
-  final String leagueName;
   final String flagAsset;
-  final List<MatchData> matches;
+  final List<MatchEntity> matches;
 
   const CountryMatchesWidget({
     super.key,
     required this.countryName,
-    required this.leagueName,
     required this.flagAsset,
     required this.matches,
   });
@@ -33,23 +31,25 @@ class CountryMatchesWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 7, horizontal: 6),
             child: Row(
               children: [
-                // Flag Icon
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(24),
-                  child: SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: SvgPicture.asset(
-                      flagAsset,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(24),
+                    child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CachedNetworkImage(
+                        imageUrl: flagAsset,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                    )),
                 SizedBox(width: 8),
-
-                // Country and League Name
                 Text(
-                  "$countryName - $leagueName",
+                  countryName,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
@@ -59,8 +59,6 @@ class CountryMatchesWidget extends StatelessWidget {
               ],
             ),
           ),
-
-          // List of Matches
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -77,11 +75,11 @@ class CountryMatchesWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 final match = matches[index];
                 return CustomMatchWidget(
-                  teamName1: match.teamName1,
-                  teamName2: match.teamName2,
+                  teamName1: match.homeTeam.name,
+                  teamName2: match.awayTeam.name,
                   matchTime: match.matchTime,
-                  teamLogo1: match.teamLogo1,
-                  teamLogo2: match.teamLogo2,
+                  teamLogo1: match.homeTeam.shirt,
+                  teamLogo2: match.awayTeam.shirt,
                 );
               },
             ),

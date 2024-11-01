@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:torliga/core/constants/app_end_points.dart';
 
 import '../utils/logger.dart';
 
@@ -11,9 +12,7 @@ class DioInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // TODO: Retrieve accessToken from SecureStorage
-    const String accessToken =
-        "14813|l5WcBvXKig4BrcU0op4LkW7ML7ekVb2vH96Wkm6l00d96ff8";
-    _addHeaders(options, accessToken);
+    _addHeaders(options, ApiEndPoints.testToken);
     _logRequestDetails(options);
     super.onRequest(options, handler);
   }

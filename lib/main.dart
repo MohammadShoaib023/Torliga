@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'app/app_injection_container.dart';
 import 'app/torliga_app.dart';
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:torliga/core/enums/bloc_status.dart';
 import 'package:torliga/core/usecase/usecase.dart';
 import 'package:torliga/features/matches/presentation/bloc/matches_events.dart';
@@ -31,9 +32,12 @@ class MatchesBloc extends Bloc<MatchesEvents, MatchesState> {
       final response = await fetchTodaysMatchesUseCase.call(NoParams());
 
       response.fold((failure) {
-        emit(state.copyWith(todaysMatchesStatus: BlocStateStatus.success));
+        emit(state.copyWith(todaysMatchesStatus: BlocStateStatus.failure));
       }, (data) {
-        logger.e("Today Matches $data");
+        if (kDebugMode) {
+          logger.e("Today Matches $data");
+        }
+
         emit(state.copyWith(
             todaysMatches: data, todaysMatchesStatus: BlocStateStatus.success));
       });
@@ -51,9 +55,12 @@ class MatchesBloc extends Bloc<MatchesEvents, MatchesState> {
       final response = await fetchPastMatchesUseCase.call(NoParams());
 
       response.fold((failure) {
-        emit(state.copyWith(pastMatchesStatus: BlocStateStatus.success));
+        emit(state.copyWith(pastMatchesStatus: BlocStateStatus.failure));
       }, (data) {
-        logger.e("Past Matches $data");
+        if (kDebugMode) {
+          logger.e("Past Matches $data");
+        }
+
         emit(state.copyWith(
             pastMatches: data, pastMatchesStatus: BlocStateStatus.success));
       });
@@ -70,9 +77,12 @@ class MatchesBloc extends Bloc<MatchesEvents, MatchesState> {
       final response = await fetchUpcomingMatchesUseCase.call(NoParams());
 
       response.fold((failure) {
-        emit(state.copyWith(upcomingMatchesStatus: BlocStateStatus.success));
+        emit(state.copyWith(upcomingMatchesStatus: BlocStateStatus.failure));
       }, (data) {
-        logger.e("Past Matches $data");
+        if (kDebugMode) {
+          logger.e("Past Matches $data");
+        }
+
         emit(state.copyWith(
           upcomingMatches: data,
           upcomingMatchesStatus: BlocStateStatus.success,
