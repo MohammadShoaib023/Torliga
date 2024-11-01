@@ -10,4 +10,8 @@ class ApiEndPoints {
   static const String pastMatches = "/yesterdayMatches";
   static const String upcomingMatches = "/tomorrowMatches";
   static const String todaysMatches = "/todayMatches";
+
+  // Websocket
+  static const String websocketURL =
+      "wss://mqtt.staging.torliga.com/app/4bae652d93c285868d11?protocol=7&client=js&version=4.3.1&flash=false";
 }
