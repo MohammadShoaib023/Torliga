@@ -50,3 +50,9 @@ _Loading Effect Screen as Like as Original Torliga_
 
 ![Screen 3](screenshot/upcoming.jpeg)
 _Upcoming Matches Screen_
+
+## Download APK
+
+You can download the APK of the Torliga application from the link below:
+
+[Download Torliga APK](build\app\outputs\apk\release\app-release.apk)
