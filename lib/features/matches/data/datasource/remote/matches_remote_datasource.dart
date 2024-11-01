@@ -9,9 +9,9 @@ import '../../../domain/entities/matches_entity.dart';
 import '../../model/matches_model.dart';
 
 abstract class MatchesRemoteDatasource {
-  Future<Either<Failure, MatchesEntity>> fetchPastMatches();
-  Future<Either<Failure, MatchesEntity>> fetchUpcomingMatches();
-  Future<Either<Failure, MatchesEntity>> fetchTodayMatches();
+  Future<Either<Failure, MatchesModel>> fetchPastMatches();
+  Future<Either<Failure, MatchesModel>> fetchUpcomingMatches();
+  Future<Either<Failure, MatchesModel>> fetchTodayMatches();
 }
 
 class MatchesRemoteDatesourceImpl extends MatchesRemoteDatasource {
@@ -22,7 +22,7 @@ class MatchesRemoteDatesourceImpl extends MatchesRemoteDatasource {
       : _client = client;
 
   @override
-  Future<Either<Failure, MatchesEntity>> fetchPastMatches() async {
+  Future<Either<Failure, MatchesModel>> fetchPastMatches() async {
     if (await networkInfo.isConnected) {
       return await _client.get(
           url: ApiEndPoints.pastMatches, converter: (response) => response);
@@ -32,17 +32,18 @@ class MatchesRemoteDatesourceImpl extends MatchesRemoteDatasource {
   }
 
   @override
-  Future<Either<Failure, MatchesEntity>> fetchTodayMatches() async {
+  Future<Either<Failure, MatchesModel>> fetchTodayMatches() async {
     if (await networkInfo.isConnected) {
       return await _client.get(
-          url: ApiEndPoints.todaysMatches, converter: (response) => response);
+          url: ApiEndPoints.todaysMatches,
+          converter: (response) => MatchesModel.fromJson(response));
     } else {
       return Left(InternetDisconnectedFailure("No Internet"));
     }
   }
 
   @override
-  Future<Either<Failure, MatchesEntity>> fetchUpcomingMatches() async {
+  Future<Either<Failure, MatchesModel>> fetchUpcomingMatches() async {
     if (await networkInfo.isConnected) {
       return await _client.get(
           url: ApiEndPoints.upcomingMatches, converter: (response) => response);
