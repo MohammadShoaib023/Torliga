@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-
 import '../core/network/network_info.dart';
 import '../core/services/api_service.dart';
+import '../core/services/websocket_service.dart';
 import '../features/matches/data/datasource/remote/matches_remote_datasource.dart';
 import '../features/matches/data/repository_imp/matches_repository_impl.dart';
 import '../features/matches/domain/repository/matches_repository.dart';
@@ -15,7 +15,7 @@ final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
   sl.registerLazySingleton<ApiService>(() => ApiService());
-
+  sl.registerLazySingleton<WebSocketService>(() => WebSocketService());
   core();
   dataSources();
   repositories();
@@ -48,5 +48,6 @@ void useCases() {
 }
 
 void blocs() {
-  sl.registerLazySingleton<MatchesBloc>(() => MatchesBloc(sl(), sl(), sl()));
+  sl.registerLazySingleton<MatchesBloc>(
+      () => MatchesBloc(sl(), sl(), sl(), sl()));
 }
