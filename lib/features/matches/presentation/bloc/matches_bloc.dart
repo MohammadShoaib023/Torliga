@@ -26,6 +26,7 @@ class MatchesBloc extends Bloc<MatchesEvents, MatchesState> {
   FutureOr<void> _fetchTodayMatches(
       FetchTodayMatchesEvent event, Emitter<MatchesState> emit) async {
     emit(state.copyWith(todaysMatchesStatus: BlocStateStatus.inProgress));
+    emit(state.copyWith(pastMatches: null, upcomingMatches: null));
     try {
       final response = await fetchTodaysMatchesUseCase.call(NoParams());
 
@@ -44,6 +45,8 @@ class MatchesBloc extends Bloc<MatchesEvents, MatchesState> {
   FutureOr<void> _fetchPastMatches(
       FetchPastMatchesEvent event, Emitter<MatchesState> emit) async {
     emit(state.copyWith(pastMatchesStatus: BlocStateStatus.inProgress));
+    emit(state.copyWith(todaysMatches: null, upcomingMatches: null));
+
     try {
       final response = await fetchPastMatchesUseCase.call(NoParams());
 
@@ -61,6 +64,8 @@ class MatchesBloc extends Bloc<MatchesEvents, MatchesState> {
 
   FutureOr<void> _fetchUpcomingMatches(
       FetchUpcomingMatchesEvent event, Emitter<MatchesState> emit) async {
+    emit(state.copyWith(upcomingMatchesStatus: BlocStateStatus.inProgress));
+    emit(state.copyWith(todaysMatches: null, pastMatches: null));
     try {
       final response = await fetchUpcomingMatchesUseCase.call(NoParams());
 
