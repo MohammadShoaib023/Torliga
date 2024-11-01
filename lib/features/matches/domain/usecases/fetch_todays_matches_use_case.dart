@@ -1,12 +1,10 @@
 import 'package:dartz/dartz.dart';
-
 import '../../../../core/failure/failure.dart';
 import '../../../../core/usecase/usecase.dart';
-import '../entities/datum_entity.dart';
 import '../entities/matches_entity.dart';
 import '../repository/matches_repository.dart';
 
-class FetchTodaysMatchesUseCase extends UseCase<List<DatumEntity>, NoParams> {
+class FetchTodaysMatchesUseCase extends UseCase<MatchesEntity, NoParams> {
   final MatchesRepository matchesRepository;
   FetchTodaysMatchesUseCase(this.matchesRepository);
 
