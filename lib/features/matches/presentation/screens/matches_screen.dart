@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:torliga/features/matches/presentation/bloc/matches_bloc.dart';
+import 'package:torliga/features/matches/presentation/bloc/matches_events.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-
-import '../../../fake_data.dart';
-import '../widgets/country_matches_widgets.dart';
+import '../widgets/custom_loading_country_matches.dart';
+import '../widgets/gradient_background.dart';
+import 'loading_matches.dart';
+import 'past_matches.dart';
+import 'today_matches.dart';
+import 'upcoming_matches.dart';
 
 class MatchesScreen extends StatefulWidget {
   const MatchesScreen({super.key});
@@ -16,36 +20,59 @@ class MatchesScreen extends StatefulWidget {
   State<MatchesScreen> createState() => _MatchesScreenState();
 }
 
-class _MatchesScreenState extends State<MatchesScreen> {
-  List<MatchData> matchList = [
-    MatchData(
-      teamName1: "Valencia",
-      teamName2: "Barcelona",
-      matchTime: "23:30",
-      teamLogo1: AppAssets.one,
-      teamLogo2: AppAssets.two,
-    ),
-    MatchData(
-      teamName1: "Valencia",
-      teamName2: "Barcelona",
-      matchTime: "23:30",
-      teamLogo1: AppAssets.one,
-      teamLogo2: AppAssets.two,
-    ),
-    MatchData(
-      teamName1: "Real Madrid",
-      teamName2: "Sevilla",
-      matchTime: "20:15",
-      teamLogo1: AppAssets.one,
-      teamLogo2: AppAssets.two,
-    ),
-    // Add more matches as needed
-  ];
+class _MatchesScreenState extends State<MatchesScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _pageController = PageController(initialPage: _tabController.index);
+    _tabController.addListener(_handleTabChange);
+    _loadDataForTab(_tabController.index);
+  }
+
+  void _handleTabChange() {
+    if (_tabController.indexIsChanging) {
+      _pageController.jumpToPage(_tabController.index);
+      _loadDataForTab(_tabController.index);
+    }
+  }
+
+  void _onPageChanged(int pageIndex) {
+    if (pageIndex != _tabController.index) {
+      _tabController.animateTo(pageIndex);
+      _loadDataForTab(pageIndex);
+    }
+  }
+
+  void _loadDataForTab(int index) {
+    switch (index) {
+      case 0: // "Today" tab
+        BlocProvider.of<MatchesBloc>(context).add(FetchTodayMatchesEvent());
+        break;
+      case 1: // "Upcoming" tab
+        BlocProvider.of<MatchesBloc>(context).add(FetchUpcomingMatchesEvent());
+        break;
+      case 2: // "Past" tab
+        BlocProvider.of<MatchesBloc>(context).add(FetchPastMatchesEvent());
+        break;
+    }
+  }
+
+  @override
+  void dispose() {
+    _tabController.removeListener(_handleTabChange);
+    _tabController.dispose();
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     return DefaultTabController(
-      initialIndex: 1,
       length: 3,
       child: Scaffold(
         backgroundColor: AppColors.scaffoldColor,
@@ -55,7 +82,8 @@ class _MatchesScreenState extends State<MatchesScreen> {
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(60.0),
             child: ButtonsTabBar(
-              width: screenWidth * 0.3,
+              controller: _tabController,
+              width: MediaQuery.of(context).size.width * 0.3,
               height: 45,
               labelStyle: GoogleFonts.chakraPetch(
                 textStyle: const TextStyle(
@@ -67,7 +95,7 @@ class _MatchesScreenState extends State<MatchesScreen> {
               unselectedLabelStyle: GoogleFonts.chakraPetch(
                 textStyle: const TextStyle(
                   fontSize: 12,
-                  color: Colors.white24,
+                  color: AppColors.textCardColor,
                 ),
               ),
               contentCenter: true,
@@ -82,47 +110,25 @@ class _MatchesScreenState extends State<MatchesScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
               tabs: const [
-                Tab(
-                  text: "Today",
-                ),
-                Tab(
-                  text: "Upcoming",
-                ),
-                Tab(
-                  text: "Past",
-                ),
+                Tab(text: "Today"),
+                Tab(text: "Upcoming"),
+                Tab(text: "Past"),
               ],
             ),
           ),
         ),
-        body: TabBarView(
+        body: Stack(
           children: [
-            ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-              itemCount:
-                  4, // Change this to the number of items you want to display
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: CountryMatchesWidget(
-                    countryName: "Spain",
-                    leagueName: "LaLiga",
-                    flagAsset: AppAssets.spain,
-                    matches: matchList,
-                  ),
-                );
-              },
+            GradientBackgroundWidget(),
+            PageView(
+              controller: _pageController,
+              onPageChanged: _onPageChanged,
+              children: [
+                TodayMatches(),
+                UpcomingMatches(),
+                PastMatches(),
+              ],
             ),
-            Center(
-                child: Text(
-              "Hotel",
-              style: TextStyle(color: Colors.white),
-            )),
-            Center(
-                child: Text(
-              "Hostel",
-              style: TextStyle(color: Colors.white),
-            )),
           ],
         ),
       ),
