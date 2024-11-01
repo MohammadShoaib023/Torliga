@@ -35,7 +35,7 @@ The project is built with clean architecture principles, employing BLoC for stat
     │ │ ├── repository/                   # Domain repository interface for dependency inversion
     │ │ └── usecases/                     # Use cases encapsulating core business rules
     │ └── presentation/                   # Presentation layer (UI) for each feature
-    │ ├── bloc/                           # BLoC classes managing feature-specific state
-    │ ├── screen/                         # UI screens/pages for user interaction
-    │ └── widgets/                        # Reusable UI components/widgets for the feature
+    │   ├── bloc/                         # BLoC classes managing feature-specific state
+    │   ├── screen/                       # UI screens/pages for user interaction
+    │   └── widgets/                      # Reusable UI components/widgets for the feature
     └── main.dart                         # App's main entry point that bootstraps the app
