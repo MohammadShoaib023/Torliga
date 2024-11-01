@@ -25,7 +25,8 @@ class MatchesRemoteDatesourceImpl extends MatchesRemoteDatasource {
   Future<Either<Failure, MatchesModel>> fetchPastMatches() async {
     if (await networkInfo.isConnected) {
       return await _client.get(
-          url: ApiEndPoints.pastMatches, converter: (response) => response);
+          url: ApiEndPoints.pastMatches,
+          converter: (response) => MatchesModel.fromJson(response));
     } else {
       return Left(InternetDisconnectedFailure("No Internet"));
     }
@@ -46,7 +47,8 @@ class MatchesRemoteDatesourceImpl extends MatchesRemoteDatasource {
   Future<Either<Failure, MatchesModel>> fetchUpcomingMatches() async {
     if (await networkInfo.isConnected) {
       return await _client.get(
-          url: ApiEndPoints.upcomingMatches, converter: (response) => response);
+          url: ApiEndPoints.upcomingMatches,
+          converter: (response) => MatchesModel.fromJson(response));
     } else {
       return Left(InternetDisconnectedFailure("No Internet"));
     }
