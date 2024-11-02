@@ -55,4 +55,4 @@ _Upcoming Matches Screen_
 
 You can download the APK of the Torliga application from the link below:
 
-[Download Torliga APK](build\app\outputs\apk\release\app-release.apk)
+[Download Torliga APK](https://drive.google.com/file/d/1dAjBr0j_KMt2jiyjNJDaYbtXOoTZVjJD/view?usp=drive_link)
