@@ -42,14 +42,18 @@ The project is built with clean architecture principles, employing BLoC for stat
 
 ## App Screenshots
 
-![Screen 1](screenshot/splash.jpeg)
+<img src="screenshot/splash.jpeg" alt="Splash Screen as like as Original Torliga" width="300"/>
+
 _Splash Screen as like as Original Torliga_
 
-![Screen 2](screenshot/loading.jpeg)
+<img src="screenshot/loading.jpeg" alt="Loading Effect Screen as Like as Original Torliga" width="300"/>
+
 _Loading Effect Screen as Like as Original Torliga_
 
-![Screen 3](screenshot/upcoming.jpeg)
+<img src="screenshot/upcoming.jpeg" alt="Upcoming Matches Screen" width="300"/>
+
 _Upcoming Matches Screen_
+
 
 ## Download APK
 
