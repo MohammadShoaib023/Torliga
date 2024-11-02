@@ -1,24 +1,29 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:torliga/core/failure/failure.dart';
 import '../../../../../core/constants/app_end_points.dart';
 import '../../../../../core/network/network_info.dart';
 import '../../../../../core/services/api_service.dart';
-import '../../../domain/entities/matches_entity.dart';
+import '../../../../../core/services/websocket_service.dart';
 import '../../model/matches_model.dart';
+import '../../model/score_model.dart';
 
 abstract class MatchesRemoteDatasource {
   Future<Either<Failure, MatchesModel>> fetchPastMatches();
   Future<Either<Failure, MatchesModel>> fetchUpcomingMatches();
   Future<Either<Failure, MatchesModel>> fetchTodayMatches();
+  Stream<ScoreModel> listenForScoreUpdates();
 }
 
 class MatchesRemoteDatesourceImpl extends MatchesRemoteDatasource {
   final ApiService _client;
   final NetworkInfo networkInfo;
+  final WebSocketService _webSocketService;
 
-  MatchesRemoteDatesourceImpl(ApiService client, this.networkInfo)
+  MatchesRemoteDatesourceImpl(
+      ApiService client, this.networkInfo, this._webSocketService)
       : _client = client;
 
   @override
@@ -52,5 +57,17 @@ class MatchesRemoteDatesourceImpl extends MatchesRemoteDatasource {
     } else {
       return Left(InternetDisconnectedFailure("No Internet"));
     }
+  }
+
+  // Listen to WebSocket Score Updates
+  @override
+  Stream<ScoreModel> listenForScoreUpdates() {
+    return _webSocketService.initWebsocket().stream.map((message) {
+      final decodedMessage = jsonDecode(message);
+      if (decodedMessage['event'] == 'score-event') {
+        return ScoreModel.fromJson(decodedMessage['data']);
+      }
+      throw Exception('Unexpected WebSocket event');
+    });
   }
 }
