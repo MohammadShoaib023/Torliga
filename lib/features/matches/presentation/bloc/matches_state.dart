@@ -10,6 +10,7 @@ class MatchesState extends Equatable {
   final MatchesEntity? todaysMatches;
   final MatchesEntity? pastMatches;
   final MatchesEntity? upcomingMatches;
+  final List<dynamic>? latestScoreUpdate;
 
   const MatchesState({
     this.todaysMatchesStatus = BlocStateStatus.initial,
@@ -19,6 +20,7 @@ class MatchesState extends Equatable {
     this.pastMatches,
     this.upcomingMatches,
     this.errorMessage,
+    this.latestScoreUpdate,
   });
 
   MatchesState copyWith({
@@ -28,7 +30,8 @@ class MatchesState extends Equatable {
     MatchesEntity? todaysMatches,
     MatchesEntity? pastMatches,
     MatchesEntity? upcomingMatches,
-    final String? errorMessage,
+    String? errorMessage,
+    List<dynamic>? latestScoreUpdate,
   }) =>
       MatchesState(
         todaysMatchesStatus: todaysMatchesStatus ?? this.todaysMatchesStatus,
@@ -39,6 +42,7 @@ class MatchesState extends Equatable {
         pastMatches: pastMatches ?? this.pastMatches,
         upcomingMatches: upcomingMatches ?? this.upcomingMatches,
         errorMessage: errorMessage ?? this.errorMessage,
+        latestScoreUpdate: latestScoreUpdate ?? this.latestScoreUpdate,
       );
 
   @override
@@ -49,6 +53,7 @@ class MatchesState extends Equatable {
         todaysMatchesStatus,
         pastMatchesStatus,
         upcomingMatchesStatus,
-        errorMessage
+        errorMessage,
+        latestScoreUpdate
       ];
 }

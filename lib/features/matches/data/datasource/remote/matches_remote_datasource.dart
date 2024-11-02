@@ -61,13 +61,8 @@ class MatchesRemoteDatesourceImpl extends MatchesRemoteDatasource {
 
   // Listen to WebSocket Score Updates
   @override
+  @override
   Stream<ScoreModel> listenForScoreUpdates() {
-    return _webSocketService.initWebsocket().stream.map((message) {
-      final decodedMessage = jsonDecode(message);
-      if (decodedMessage['event'] == 'score-event') {
-        return ScoreModel.fromJson(decodedMessage['data']);
-      }
-      throw Exception('Unexpected WebSocket event');
-    });
+    return _webSocketService.scoreStream;
   }
 }

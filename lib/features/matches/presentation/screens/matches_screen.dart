@@ -4,11 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:torliga/features/matches/presentation/bloc/matches_bloc.dart';
 import 'package:torliga/features/matches/presentation/bloc/matches_events.dart';
-import '../../../../core/constants/app_assets.dart';
+import '../../../../app/app_injection_container.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../widgets/custom_loading_country_matches.dart';
+import '../../../../core/services/websocket_service.dart';
 import '../widgets/gradient_background.dart';
-import 'loading_matches.dart';
 import 'past_matches.dart';
 import 'today_matches.dart';
 import 'upcoming_matches.dart';
@@ -24,6 +23,7 @@ class _MatchesScreenState extends State<MatchesScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late PageController _pageController;
+  late WebSocketService webSocketService;
 
   @override
   void initState() {
@@ -67,6 +67,8 @@ class _MatchesScreenState extends State<MatchesScreen>
     _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     _pageController.dispose();
+    // webSocketService.disconnect();
+
     super.dispose();
   }
 

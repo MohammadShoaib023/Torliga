@@ -6,6 +6,7 @@ import 'package:torliga/features/matches/presentation/bloc/matches_events.dart';
 import 'package:torliga/features/matches/presentation/bloc/matches_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/services/websocket_service.dart';
 import '../../../../core/utils/logger.dart';
 import '../../domain/usecases/fetch_past_matches_use_case.dart';
 import '../../domain/usecases/fetch_todays_matches_use_case.dart';
@@ -15,13 +16,15 @@ class MatchesBloc extends Bloc<MatchesEvents, MatchesState> {
   final FetchUpcomingMatchesUseCase fetchUpcomingMatchesUseCase;
   final FetchPastMatchesUseCase fetchPastMatchesUseCase;
   final FetchTodaysMatchesUseCase fetchTodaysMatchesUseCase;
+  final WebSocketService webSocketService;
 
   MatchesBloc(this.fetchUpcomingMatchesUseCase, this.fetchPastMatchesUseCase,
-      this.fetchTodaysMatchesUseCase)
+      this.fetchTodaysMatchesUseCase, this.webSocketService)
       : super(MatchesState()) {
     on<FetchTodayMatchesEvent>(_fetchTodayMatches);
     on<FetchPastMatchesEvent>(_fetchPastMatches);
     on<FetchUpcomingMatchesEvent>(_fetchUpcomingMatches);
+    on<UpdateScoreEvent>(_updateScore);
   }
 
   FutureOr<void> _fetchTodayMatches(
@@ -91,5 +94,11 @@ class MatchesBloc extends Bloc<MatchesEvents, MatchesState> {
     } catch (e) {
       emit(state.copyWith(upcomingMatchesStatus: BlocStateStatus.failure));
     }
+  }
+
+  FutureOr<void> _updateScore(
+      UpdateScoreEvent event, Emitter<MatchesState> emit) {
+    add(FetchTodayMatchesEvent());
+    // Emit the state with updated matches
   }
 }
